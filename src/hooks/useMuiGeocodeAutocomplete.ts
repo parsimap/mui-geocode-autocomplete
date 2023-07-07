@@ -1,8 +1,6 @@
 import * as React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useLazyGeocodeQuery } from "../../../../features/apiSlice";
-import { PlaceType } from "../../MuiGeocodeAutocomplete";
 import IMuiGeocodeAutocompleteProps from "../interfaces/IMuiGeocodeAutocompleteProps";
+import IGeocodePlace from "../interfaces/IGeocodePlace";
 
 interface INoOptions {
   type: NoOptionsType;
@@ -17,23 +15,23 @@ export default function useGeocodeAutocomplete({
   mapViewPort,
   onChange,
 }: IMuiGeocodeAutocompleteProps) {
-  const timeoutRef = useRef<number>();
-  const prevInputValue = useRef<string>();
-  const [inputValue, setInputValue] = useState("");
-  const [trigger, { data, isFetching }] = useLazyGeocodeQuery();
-  const [options, setOptions] = useState<PlaceType[]>([]);
-  const [noOptions, setSetNoOptions] = useState<INoOptions>({
+  const timeoutRef = React.useRef<number>();
+  const prevInputValue = React.useRef<string>();
+  const [inputValue, setInputValue] = React.useState("");
+  const [trigger, { data, isFetching }] = React.useLazyGeocodeQuery();
+  const [options, setOptions] = React.useState<IGeocodePlace[]>([]);
+  const [noOptions, setSetNoOptions] = React.useState<INoOptions>({
     type: "no-result",
     accuracyRadius: 0,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!data) {
       return;
     }
 
     if (data.status === "OK") {
-      let newOptions: PlaceType[] = [];
+      let newOptions: IGeocodePlace[] = [];
 
       /**
        * Whether the geocode service has result, to avoid from lost current value
@@ -58,7 +56,7 @@ export default function useGeocodeAutocomplete({
     }
   }, [data, value]);
 
-  const fetchGeocode = useCallback(() => {
+  const fetchGeocode = React.useCallback(() => {
     if (inputValue === "" || prevInputValue.current === inputValue) return;
     prevInputValue.current = inputValue;
     clearTimeout(timeoutRef.current);
@@ -77,27 +75,27 @@ export default function useGeocodeAutocomplete({
     };
   }, [inputValue, mapViewPort, token, trigger]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchGeocode();
   }, [fetchGeocode, inputValue]);
 
-  const handleChange = useCallback(
-    (_: React.SyntheticEvent, newValue: PlaceType | null) => {
+  const handleChange = React.useCallback(
+    (_: React.SyntheticEvent, newValue: IGeocodePlace | null) => {
       setOptions(newValue ? [newValue, ...options] : options);
       onChange(newValue);
     },
     [onChange, options]
   );
 
-  const handleSearchClick = useCallback(() => {
+  const handleSearchClick = React.useCallback(() => {
     fetchGeocode();
   }, [fetchGeocode]);
 
-  const handleInputChange = useCallback((_: any, newValue: string) => {
+  const handleInputChange = React.useCallback((_: any, newValue: string) => {
     setInputValue(newValue);
   }, []);
 
-  const handleKeyDown = useCallback(
+  const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "Enter" && options.length) {
         if (isFetching) {

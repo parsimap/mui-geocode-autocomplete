@@ -1,16 +1,14 @@
 import * as React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
-import GeocodeOption from "./src/components/GeocodeOption";
+import GeocodeOption from "./GeocodeOption";
 import { autocompleteClasses, IconButton } from "@mui/material";
-import MuiRoundedTextField from "./src/components/MuiRoundedTextField";
+import MuiRoundedTextField from "./MuiRoundedTextField";
 import SearchIcon from "@mui/icons-material/Search";
-import useGeocodeAutocomplete from "./src/hooks/useMuiGeocodeAutocomplete";
-import IMuiGeocodeAutocompleteProps from "./src/interfaces/IMuiGeocodeAutocompleteProps";
-import IGeocodePlace from "./src/interfaces/IGeocodePlace";
+import useGeocodeAutocomplete from "../hooks/useMuiGeocodeAutocomplete";
+import IMuiGeocodeAutocompleteProps from "../interfaces/IMuiGeocodeAutocompleteProps";
+import IGeocodePlace from "../interfaces/IGeocodePlace";
 
-export default function MuiGeocodeAutocomplete(
-  props: IMuiGeocodeAutocompleteProps
-) {
+function Autocomplete(props: IMuiGeocodeAutocompleteProps) {
   const {
     value,
     options,
@@ -70,3 +68,9 @@ export default function MuiGeocodeAutocomplete(
     />
   );
 }
+
+const MuiGeocodeAutocomplete = (props: IMuiGeocodeAutocompleteProps) => (
+  <Autocomplete {...props} />
+);
+
+export default MuiGeocodeAutocomplete;
