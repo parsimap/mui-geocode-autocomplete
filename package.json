@@ -1,6 +1,6 @@
 {
   "name": "@parsimap/mui-geocode-autocomplete",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An autocomplete for MUI is enhanced by parsimap geocode service.\n\n",
   "main": "dist/index.js",
   "repository": {
