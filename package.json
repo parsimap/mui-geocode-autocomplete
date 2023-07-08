@@ -38,8 +38,7 @@
     "@mui/material": "^5.12.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@parsimap/react-mapbox-gl": "^1.4.4",
-    "@tanstack/react-query": "^4.29.19"
+    "@parsimap/react-mapbox-gl": "^1.4.4"
   },
   "eslintConfig": {
     "extends": [
@@ -63,7 +62,6 @@
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "typescript": "^4.7.4",
-    "@tanstack/react-query": "^4.29.19",
     "run-s": "^0.0.0"
   }
 }

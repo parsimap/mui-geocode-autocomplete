@@ -1,12 +1,6 @@
-// import MuiGeocodeAutocomplete from "./components/MuiGeocodeAutocomplete";
-// import IGeocodePlace from "./interfaces/IGeocodePlace";
-//
-// export default MuiGeocodeAutocomplete;
-//
-// export {
-//   IGeocodePlace
-// }
+import MuiGeocodeAutocomplete from "./components/MuiGeocodeAutocomplete";
+import IGeocodePlace from "./interfaces/IGeocodePlace";
 
-import useGeocodeQuery from "./hooks/useGeocodeQuery";
+export default MuiGeocodeAutocomplete;
 
-export default useGeocodeQuery;
+export { IGeocodePlace };

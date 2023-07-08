@@ -1,14 +1,16 @@
 import * as React from "react";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { autocompleteClasses } from "@mui/material/Autocomplete";
 import GeocodeOption from "./GeocodeOption";
-import { autocompleteClasses, IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import MuiRoundedTextField from "./MuiRoundedTextField";
 import SearchIcon from "@mui/icons-material/Search";
 import useGeocodeAutocomplete from "../hooks/useMuiGeocodeAutocomplete";
 import IMuiGeocodeAutocompleteProps from "../interfaces/IMuiGeocodeAutocompleteProps";
 import IGeocodePlace from "../interfaces/IGeocodePlace";
+import reactQuery from "@tanstack/react-query";
+import useGeocodeQuery from "../hooks/useGeocodeQuery";
 
-function Autocomplete(props: IMuiGeocodeAutocompleteProps) {
+function Component(props: IMuiGeocodeAutocompleteProps) {
   const {
     value,
     options,
@@ -18,6 +20,13 @@ function Autocomplete(props: IMuiGeocodeAutocompleteProps) {
     handleSearchClick,
     handleInputChange,
   } = useGeocodeAutocomplete(props);
+
+  const [trigger] = useGeocodeQuery();
+
+  React.useEffect(() => {
+    trigger()
+
+  }, [trigger]);
 
   return (
     <Autocomplete<IGeocodePlace>
@@ -69,8 +78,12 @@ function Autocomplete(props: IMuiGeocodeAutocompleteProps) {
   );
 }
 
+const queryClient = new reactQuery.QueryClient();
+
 const MuiGeocodeAutocomplete = (props: IMuiGeocodeAutocompleteProps) => (
-  <Autocomplete {...props} />
+  <reactQuery.QueryClientProvider client={queryClient}>
+    <Component {...props} />
+  </reactQuery.QueryClientProvider>
 );
 
 export default MuiGeocodeAutocomplete;
