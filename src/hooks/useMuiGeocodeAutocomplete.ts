@@ -1,7 +1,7 @@
 import * as React from "react";
 import IMuiGeocodeAutocompleteProps from "../interfaces/IMuiGeocodeAutocompleteProps";
 import IGeocodePlace from "../interfaces/IGeocodePlace";
-import useGeocodeQuery from "./useGeocodeQuery";
+import useLazyGeocodeQuery from "./useLazyGeocodeQuery";
 
 interface INoOptions {
   type: NoOptionsType;
@@ -19,17 +19,15 @@ export default function useGeocodeAutocomplete({
   const timeoutRef = React.useRef<number>();
   const prevInputValue = React.useRef<string>();
   const [inputValue, setInputValue] = React.useState("");
-  const [trigger, { data, isFetching }] = [
-    () => {},
-    { data: { results: [], status: "" }, isFetching: false },
-  ];
+  const {
+    trigger,
+    result: { data, isFetching },
+  } = useLazyGeocodeQuery();
   const [options, setOptions] = React.useState<IGeocodePlace[]>([]);
   const [noOptions, setSetNoOptions] = React.useState<INoOptions>({
     type: "no-result",
     accuracyRadius: 0,
   });
-
-  useGeocodeQuery()
 
   React.useEffect(() => {
     if (!data) {
@@ -70,13 +68,13 @@ export default function useGeocodeAutocomplete({
     prevInputValue.current = inputValue;
     clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
-      // trigger({
-      //   address: inputValue,
-      //   token,
-      //   zoom: mapViewPort.zoom,
-      //   lng: mapViewPort.lng,
-      //   lat: mapViewPort.lat,
-      // });
+      trigger({
+        address: inputValue,
+        token,
+        zoom: mapViewPort.zoom,
+        lng: mapViewPort.lng,
+        lat: mapViewPort.lat,
+      });
     }, 200);
 
     return () => {

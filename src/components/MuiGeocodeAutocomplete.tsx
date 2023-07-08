@@ -7,8 +7,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import useGeocodeAutocomplete from "../hooks/useMuiGeocodeAutocomplete";
 import IMuiGeocodeAutocompleteProps from "../interfaces/IMuiGeocodeAutocompleteProps";
 import IGeocodePlace from "../interfaces/IGeocodePlace";
-import reactQuery from "@tanstack/react-query";
-import useGeocodeQuery from "../hooks/useGeocodeQuery";
 
 function Component(props: IMuiGeocodeAutocompleteProps) {
   const {
@@ -20,13 +18,6 @@ function Component(props: IMuiGeocodeAutocompleteProps) {
     handleSearchClick,
     handleInputChange,
   } = useGeocodeAutocomplete(props);
-
-  const [trigger] = useGeocodeQuery();
-
-  React.useEffect(() => {
-    trigger()
-
-  }, [trigger]);
 
   return (
     <Autocomplete<IGeocodePlace>
@@ -78,12 +69,8 @@ function Component(props: IMuiGeocodeAutocompleteProps) {
   );
 }
 
-const queryClient = new reactQuery.QueryClient();
-
 const MuiGeocodeAutocomplete = (props: IMuiGeocodeAutocompleteProps) => (
-  <reactQuery.QueryClientProvider client={queryClient}>
-    <Component {...props} />
-  </reactQuery.QueryClientProvider>
+  <Component {...props} />
 );
 
 export default MuiGeocodeAutocomplete;
