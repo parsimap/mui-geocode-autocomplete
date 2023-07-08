@@ -1,6 +1,6 @@
 {
   "name": "@parsimap/mui-geocode-autocomplete",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An autocomplete for MUI is enhanced by parsimap geocode service.\n\n",
   "main": "dist/index.js",
   "repository": {
@@ -20,8 +20,8 @@
   "scripts": {
     "build": "microbundle-crl --compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "prepare": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
+    "prepare": "npm-run-all build",
+    "test": "npm-run-all test:unit test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
@@ -57,11 +57,11 @@
     "@types/react-dom": "^18.2.4",
     "mapbox-gl": "^1.13.2",
     "microbundle-crl": "^0.13.10",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "run-s": "^0.0.0",
     "typescript": "^4.7.4"
   }
 }
